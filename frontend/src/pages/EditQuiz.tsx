@@ -121,7 +121,7 @@ export default function EditQuiz({ id }: { id: string }) {
         description: error.response?.data?.error || 'Failed to load quiz',
         variant: 'destructive',
       })
-      navigate('/')
+      router.push('/')
     }
   }
 
@@ -443,7 +443,7 @@ export default function EditQuiz({ id }: { id: string }) {
         <div className="mb-6 animate-fade-in">
           <Button 
             variant="outline" 
-            onClick={() => navigate('/my-quizzes')}
+            onClick={() => router.push('/my-quizzes')}
             className="bg-white/90 hover:bg-white hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             ← Back to My Quizzes
