@@ -175,11 +175,17 @@ export default function MyQuizzes() {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <CardTitle className="group-hover:text-purple-600 transition-colors">{quiz.title}</CardTitle>
+                          <CardTitle className="group-hover:text-purple-600 transition-colors">
+                            {quiz.title}
+                          </CardTitle>
                           {quiz.is_public ? (
-                            <Globe className="h-4 w-4 text-green-600" title="Public" />
+                            <span title="Public">
+                              <Globe className="h-4 w-4 text-green-600" />
+                            </span>
                           ) : (
-                            <Lock className="h-4 w-4 text-red-600" title="Private" />
+                            <span title="Private">
+                              <Lock className="h-4 w-4 text-red-600" />
+                            </span>
                           )}
                         </div>
                         <CardDescription className="line-clamp-2">{quiz.description || 'No description'}</CardDescription>
