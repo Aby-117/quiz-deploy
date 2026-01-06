@@ -144,7 +144,7 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
       setWaitingForPlayers(true)
       toast({
         title: 'Room Opened',
-        description: 'Players can now join. Click "Begin Quiz" when ready to start.',
+      description: 'Players can now join. Click &quot;Begin Quiz&quot; when ready to start.',
       })
     }
   }
@@ -232,6 +232,7 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
           </CardHeader>
           {quizImage && (
             <CardContent>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={quizImage}
                 alt="Quiz"
@@ -251,7 +252,9 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
                   <CardDescription>
                     <div className="mt-2">
                       <span className="text-xl font-bold">Room Code: {roomId}</span>
-                      <p className="text-sm mt-1">Click "Start Quiz" to open the room for players to join</p>
+                      <p className="text-sm mt-1">
+                        Click &quot;Start Quiz&quot; to open the room for players to join
+                      </p>
                     </div>
                   </CardDescription>
                 </CardHeader>
@@ -270,7 +273,7 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
                   <CardTitle className="text-2xl">Waiting for Players to Join</CardTitle>
                   <CardDescription>
                     <p className="text-sm mt-2 text-green-600 font-medium">
-                      Click "Begin Quiz" when ready to start the session.
+                      Click &quot;Begin Quiz&quot; when ready to start the session.
                     </p>
                   </CardDescription>
                 </CardHeader>

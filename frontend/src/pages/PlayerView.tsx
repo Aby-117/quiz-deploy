@@ -297,7 +297,7 @@ export default function PlayerView({ roomId }: { roomId: string }) {
                 Hello, <span className="font-bold">{playerName}</span>! 
               </p>
               <p className="text-sm text-blue-700 mt-2">
-                You've successfully joined the room. The host will begin the quiz session shortly.
+                You&apos;ve successfully joined the room. The host will begin the quiz session shortly.
               </p>
             </div>
             <div className="p-3 bg-gray-50 rounded-lg">
@@ -395,6 +395,7 @@ export default function PlayerView({ roomId }: { roomId: string }) {
           </CardHeader>
           {currentQuestion?.image && (
             <CardContent>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentQuestion.image}
                 alt="Question"
