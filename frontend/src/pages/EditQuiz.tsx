@@ -54,7 +54,8 @@ export default function EditQuiz({ id }: { id: string }) {
     if (id && user) {
       fetchQuiz()
     }
-  }, [id, user, authLoading, navigate, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, user, authLoading])
 
   const fetchQuiz = async () => {
     try {
@@ -546,6 +547,7 @@ export default function EditQuiz({ id }: { id: string }) {
                 </div>
               ) : (
                 <div className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={imagePreview}
                     alt="Quiz preview"
@@ -625,6 +627,7 @@ export default function EditQuiz({ id }: { id: string }) {
                   </div>
                 ) : (
                   <div className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={question.imagePreview}
                       alt="Question preview"

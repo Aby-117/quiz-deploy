@@ -306,7 +306,7 @@ export default function Home() {
                       <div className="mt-3 p-2 bg-blue-50 rounded-lg border border-blue-200">
                         <p className="text-xs text-blue-700 flex items-center gap-1">
                           <Globe className="h-3 w-3" />
-                          Public Quiz - No active room. Click "Start Quiz" to create one.
+                          Public Quiz - No active room. Click &quot;Start Quiz&quot; to create one.
                         </p>
                       </div>
                     )}
