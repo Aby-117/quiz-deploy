@@ -256,7 +256,7 @@ export default function PlayerView({ roomId }: { roomId: string }) {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
             <p className="text-xl font-semibold">Waiting for Host Approval</p>
             <p className="text-gray-600">The host needs to approve your request to join this active quiz session.</p>
-            <Button variant="outline" onClick={() => navigate('/')}>
+            <Button variant="outline" onClick={() => router.push('/')}>
               ← Back to Home
             </Button>
           </CardContent>
@@ -271,7 +271,7 @@ export default function PlayerView({ roomId }: { roomId: string }) {
         <Card className="bg-white/95 backdrop-blur">
           <CardContent className="p-8 space-y-4">
             <p className="text-xl">Connecting to room {roomId}...</p>
-            <Button variant="outline" onClick={() => navigate('/')}>
+            <Button variant="outline" onClick={() => router.push('/')}>
               ← Back to Home
             </Button>
           </CardContent>
@@ -322,7 +322,7 @@ export default function PlayerView({ roomId }: { roomId: string }) {
       <div className="flex-1 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-8">
         <div className="max-w-4xl mx-auto">
           <div className="mb-4">
-            <Button variant="outline" onClick={() => navigate('/')}>
+            <Button variant="outline" onClick={() => router.push('/')}>
               ← Back to Home
             </Button>
           </div>
