@@ -16,9 +16,9 @@ npm i -g vercel
 vercel login
 ```
 
-### Step 3: Deploy from Root Directory
+### Step 3: Deploy from Frontend Directory
 ```bash
-# Make sure you're in the root directory (quiz-deploy)
+cd frontend
 vercel
 ```
 
@@ -56,12 +56,10 @@ Visit [vercel.com](https://vercel.com) and sign in
 1. Click **"Add New Project"**
 2. Import your Git repository
 3. Configure:
-   - **Framework Preset**: Next.js (auto-detected from vercel.json)
-   - **Root Directory**: `frontend` ⚠️ **IMPORTANT: Set this to `frontend`**
+   - **Framework Preset**: Next.js
+   - **Root Directory**: `frontend`
    - **Build Command**: `npm run build` (default)
    - **Output Directory**: `.next` (default)
-   
-   **OR** Vercel will auto-detect from `vercel.json` in the root if you set Root Directory correctly
 
 ### Step 3: Add Environment Variables
 Before deploying, click **"Environment Variables"** and add:
