@@ -1,6 +1,12 @@
 # Quiztastic Prototype
 
-A full-stack quiz application built with React, TypeScript, Express, and PostgreSQL, similar to Kahoot. Create interactive quizzes and play them in real-time with multiple players.
+A full-stack quiz application built with Next.js, TypeScript, Express, and PostgreSQL, similar to Kahoot. Create interactive quizzes and play them in real-time with multiple players.
+
+## Author
+
+**Sayyed Abu Bakr**
+
+Student ID: 2193828
 
 ## Features
 
@@ -15,13 +21,12 @@ A full-stack quiz application built with React, TypeScript, Express, and Postgre
 ## Tech Stack
 
 ### Frontend
+- Next.js 14
 - React 18
 - TypeScript
-- Vite
 - Tailwind CSS
 - shadcn/ui components
 - Socket.io Client
-- React Router
 
 ### Backend
 - Node.js
@@ -220,6 +225,11 @@ cd backend
 npm run build
 npm start
 ```
+
+## Author & Credits
+
+**Sayyed Abu Bakr**  
+Student ID: 2193828
 
 ## License
 
