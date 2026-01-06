@@ -29,7 +29,8 @@ export default function MyQuizzes() {
     if (user) {
       fetchMyQuizzes()
     }
-  }, [user, authLoading, navigate, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading])
 
   const fetchMyQuizzes = async () => {
     try {
@@ -160,15 +161,16 @@ export default function MyQuizzes() {
                   className="hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 hover:border-purple-300 animate-scale-in overflow-hidden"
                   style={{ animationDelay: `${0.5 + index * 0.1}s` }}
                 >
-                  {quiz.image_url && (
-                    <div className="w-full h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
-                      <img
-                        src={quiz.image_url}
-                        alt={quiz.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                      />
-                    </div>
-                  )}
+                {quiz.image_url && (
+                  <div className="w-full h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={quiz.image_url}
+                      alt={quiz.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
+                )}
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
@@ -240,8 +242,8 @@ export default function MyQuizzes() {
               ))}
             </div>
             {quizzes.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">You haven't created any quizzes yet.</p>
+            <div className="text-center py-12">
+              <p className="text-muted-foreground mb-4">You haven&apos;t created any quizzes yet.</p>
                 <Button
                   onClick={() => router.push('/create')}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"

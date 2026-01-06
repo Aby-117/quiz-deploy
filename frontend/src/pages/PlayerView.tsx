@@ -189,6 +189,8 @@ export default function PlayerView({ roomId }: { roomId: string }) {
     return () => {
       newSocket.close()
     }
+    // We intentionally only depend on roomId and router to avoid resubscribing on playerName changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId, router, toast])
 
   const handleAnswer = (optionId: number) => {
