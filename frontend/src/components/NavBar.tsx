@@ -27,7 +27,7 @@ export default function NavBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
-          <Link to="/" className="flex items-center space-x-2 group">
+          <Link href="/" className="flex items-center space-x-2 group">
             <div className="relative">
               <Sparkles className="h-6 w-6 text-purple-600 group-hover:rotate-12 transition-transform duration-300" />
               <div className="absolute inset-0 bg-purple-600 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
@@ -40,7 +40,7 @@ export default function NavBar() {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-1">
-            <Link to="/">
+            <Link href="/">
               <Button
                 variant={isActive('/') ? 'default' : 'ghost'}
                 className="relative group"
@@ -54,7 +54,7 @@ export default function NavBar() {
             </Link>
             {user && (
               <>
-                <Link to="/my-quizzes">
+                <Link href="/my-quizzes">
                   <Button
                     variant={isActive('/my-quizzes') ? 'default' : 'ghost'}
                     className="relative group"
@@ -66,7 +66,7 @@ export default function NavBar() {
                     )}
                   </Button>
                 </Link>
-                <Link to="/analytics">
+                <Link href="/analytics">
                   <Button
                     variant={isActive('/analytics') ? 'default' : 'ghost'}
                     className="relative group"
@@ -102,7 +102,7 @@ export default function NavBar() {
                 </Button>
               </>
             ) : (
-              <Link to="/auth">
+              <Link href="/auth">
                 <Button
                   variant="default"
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
