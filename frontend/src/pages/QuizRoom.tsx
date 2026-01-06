@@ -313,6 +313,7 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
                 </CardHeader>
                 {currentQuestion.image && (
                   <CardContent>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={currentQuestion.image}
                       alt="Question"

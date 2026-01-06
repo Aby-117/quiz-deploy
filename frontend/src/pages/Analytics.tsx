@@ -73,7 +73,9 @@ export default function Analytics() {
     if (user) {
       fetchAnalytics()
     }
-  }, [user, authLoading, navigate, toast])
+    // We intentionally depend on user/authLoading and use router/toast from closure
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading])
 
   // function to get analytics data from backend api
   const fetchAnalytics = async () => {
