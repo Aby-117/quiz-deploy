@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { io, Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
+import { createSocket } from '@/lib/socket'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import axios from 'axios'
@@ -62,7 +63,7 @@ export default function QuizRoom({ roomId }: { roomId: string }) {
     }
     fetchQuizImage()
 
-    const newSocket = io('http://localhost:5000')
+    const newSocket = createSocket()
     setSocket(newSocket)
 
     newSocket.emit('host:join', { roomId })
