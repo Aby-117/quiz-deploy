@@ -61,7 +61,9 @@ export default function CreateQuiz() {
       })
       router.push('/auth')
     }
-  }, [user, authLoading, navigate, toast])
+    // We intentionally depend on user/authLoading and use router/toast from closure
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading])
 
   if (authLoading || !user) {
     return (
