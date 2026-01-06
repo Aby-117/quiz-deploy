@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useState } from 'react'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { io, Socket } from 'socket.io-client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -19,11 +21,9 @@ interface Question {
   image?: string | null
 }
 
-export default function PlayerView() {
-  const { roomId } = useParams<{ roomId: string }>()
-  const location = useLocation()
-  const navigate = useNavigate()
-  const playerName = location.state?.playerName || 'Player'
+export default function PlayerView({ roomId }: { roomId: string }) {
+  const router = useRouter()
+  const [playerName, setPlayerName] = useState('Player')
   const { user } = useAuth()
   const [socket, setSocket] = useState<Socket | null>(null)
   const [connected, setConnected] = useState(false)
@@ -44,16 +44,23 @@ export default function PlayerView() {
   const { toast } = useToast()
 
   useEffect(() => {
+    // Get player name from localStorage (set by Home page)
+    const storedPlayerName = localStorage.getItem('playerName')
+    if (storedPlayerName) {
+      setPlayerName(storedPlayerName)
+    }
+    
     if (!roomId) {
-      navigate('/')
+      router.push('/')
       return
     }
 
+    const currentPlayerName = storedPlayerName || 'Player'
     const newSocket = io('http://localhost:5000')
     setSocket(newSocket)
 
     newSocket.on('connect', () => {
-      newSocket.emit('player:join', { roomId, playerName })
+      newSocket.emit('player:join', { roomId, playerName: currentPlayerName })
     })
 
     newSocket.on('players:list', () => {
@@ -91,7 +98,7 @@ export default function PlayerView() {
         variant: 'destructive',
       })
       setTimeout(() => {
-        navigate('/')
+        router.push('/')
       }, 2000)
     })
 
@@ -101,9 +108,9 @@ export default function PlayerView() {
         description: data.message || 'Failed to join the quiz room',
         variant: 'destructive',
       })
-      // navigate back to home after showing error
+      // router back to home after showing error
       setTimeout(() => {
-        navigate('/')
+        router.push('/')
       }, 2000)
     })
 
@@ -181,7 +188,7 @@ export default function PlayerView() {
     return () => {
       newSocket.close()
     }
-  }, [roomId, playerName, navigate, toast])
+  }, [roomId, router, toast])
 
   const handleAnswer = (optionId: number) => {
     if (selectedOption !== null || !currentQuestion || !socket || !roomId) return
@@ -202,7 +209,7 @@ export default function PlayerView() {
       socket.emit('player:leave', { roomId })
       socket.close()
     }
-    navigate('/')
+    router.push('/')
     toast({
       title: 'Left Quiz',
       description: 'You have left the quiz',

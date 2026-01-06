@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import axios from 'axios'
 
@@ -40,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const verifyToken = async (tokenToVerify: string) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/me', {
+      const response = await axios.get('/api/auth/me', {
         headers: { Authorization: `Bearer ${tokenToVerify}` },
       })
       setUser(response.data.user)
@@ -56,7 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('/api/auth/login', {
         username,
         password,
       })
@@ -72,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (username: string, email: string, password: string, name: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('/api/auth/register', {
         username,
         email,
         password,

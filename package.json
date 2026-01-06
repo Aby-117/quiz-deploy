@@ -1,7 +1,7 @@
 {
   "name": "quiz-app",
   "version": "1.0.0",
-  "description": "Kahoot-like quiz app with React, TypeScript, Express, and PostgreSQL",
+  "description": "Kahoot-like quiz app with Next.js, TypeScript, Express, and PostgreSQL",
   "scripts": {
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",

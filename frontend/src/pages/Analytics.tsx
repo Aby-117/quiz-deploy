@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import axios from 'axios'
@@ -51,7 +53,7 @@ export default function Analytics() {
   const [selectedSession, setSelectedSession] = useState<Session | null>(null)
   // loading state while we fetch data from api
   const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
   const { user, isLoading: authLoading } = useAuth()
 
@@ -64,7 +66,7 @@ export default function Analytics() {
         description: 'Please sign in to view analytics',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
       return
     }
     // if user exists, fetch their analytics data
@@ -84,11 +86,11 @@ export default function Analytics() {
           description: 'Please sign in to view analytics',
           variant: 'destructive',
         })
-        navigate('/auth')
+        router.push('/auth')
         return
       }
       // make api call to get analytics - sends token in header for auth
-      const response = await axios.get('http://localhost:5000/api/analytics', {
+      const response = await axios.get('/api/analytics', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -146,7 +148,7 @@ export default function Analytics() {
         <div className="mb-6 animate-fade-in">
           <Button
             variant="outline"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="bg-white/90 hover:bg-white hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />

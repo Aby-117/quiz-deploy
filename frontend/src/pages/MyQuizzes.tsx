@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import axios from 'axios'
@@ -10,7 +12,7 @@ import { useAuth } from '@/contexts/AuthContext'
 export default function MyQuizzes() {
   const [quizzes, setQuizzes] = useState<any[]>([])
   const [copiedRoomCode, setCopiedRoomCode] = useState<string | null>(null)
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
   const { user, isLoading: authLoading } = useAuth()
 
@@ -21,7 +23,7 @@ export default function MyQuizzes() {
         description: 'Please sign in to view your quizzes',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
       return
     }
     if (user) {
@@ -31,7 +33,7 @@ export default function MyQuizzes() {
 
   const fetchMyQuizzes = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/quiz/my')
+      const response = await axios.get('/api/quiz/my')
       setQuizzes(response.data)
     } catch (error) {
       console.error('Failed to fetch quizzes:', error)
@@ -47,15 +49,15 @@ export default function MyQuizzes() {
     if (!user) return
     
     if (activeRoomCode) {
-      navigate(`/room/${activeRoomCode}`)
+      router.push(`/room/${activeRoomCode}`)
       return
     }
     
     try {
-      const response = await axios.post('http://localhost:5000/api/room', {
+      const response = await axios.post('/api/room', {
         quizId,
       })
-      navigate(`/room/${response.data.id}`)
+      router.push(`/room/${response.data.id}`)
     } catch (error: any) {
       if (error.response?.status === 401) {
         toast({
@@ -63,7 +65,7 @@ export default function MyQuizzes() {
           description: 'Please sign in to create a quiz room',
           variant: 'destructive',
         })
-        navigate('/auth')
+        router.push('/auth')
       } else {
         toast({
           title: 'Error',
@@ -81,7 +83,7 @@ export default function MyQuizzes() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/quiz/${quizId}`)
+      await axios.delete(`/api/quiz/${quizId}`)
       toast({
         title: 'Success',
         description: 'Quiz deleted successfully',
@@ -127,7 +129,7 @@ export default function MyQuizzes() {
         <div className="mb-6 animate-fade-in">
           <Button 
             variant="outline" 
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="bg-white/90 hover:bg-white hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             ← Back to Home
@@ -184,7 +186,7 @@ export default function MyQuizzes() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => navigate(`/edit/${quiz.id}`)}
+                          onClick={() => router.push(`/edit/${quiz.id}`)}
                           className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 hover:scale-110"
                           title="Edit Quiz"
                         >
@@ -241,7 +243,7 @@ export default function MyQuizzes() {
               <div className="text-center py-12">
                 <p className="text-muted-foreground mb-4">You haven't created any quizzes yet.</p>
                 <Button
-                  onClick={() => navigate('/create')}
+                  onClick={() => router.push('/create')}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
                 >
                   Create Your First Quiz

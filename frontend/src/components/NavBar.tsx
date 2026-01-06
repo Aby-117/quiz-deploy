@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToast } from '@/components/ui/use-toast'
@@ -7,7 +10,7 @@ import { Home, LogIn, LogOut, User, Sparkles, BookOpen, BarChart3 } from 'lucide
 export default function NavBar() {
   const { user, logout } = useAuth()
   const { toast } = useToast()
-  const location = useLocation()
+  const pathname = usePathname()
 
   const handleLogout = () => {
     logout()
@@ -17,7 +20,7 @@ export default function NavBar() {
     })
   }
 
-  const isActive = (path: string) => location.pathname === path
+  const isActive = (path: string) => pathname === path
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-md shadow-sm">

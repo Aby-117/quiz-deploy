@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { io, Socket } from 'socket.io-client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -21,9 +23,8 @@ interface Question {
   image?: string | null
 }
 
-export default function QuizRoom() {
-  const { roomId } = useParams<{ roomId: string }>()
-  const navigate = useNavigate()
+export default function QuizRoom({ roomId }: { roomId: string }) {
+  const router = useRouter()
   const [socket, setSocket] = useState<Socket | null>(null)
   const [players, setPlayers] = useState<Player[]>([])
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
@@ -46,11 +47,11 @@ export default function QuizRoom() {
     // Fetch quiz image
     const fetchQuizImage = async () => {
       try {
-        const roomResponse = await axios.get(`http://localhost:5000/api/room/${roomId}`)
+        const roomResponse = await axios.get(`/api/room/${roomId}`)
         if (roomResponse.data.quiz?.image_url) {
           setQuizImage(roomResponse.data.quiz.image_url)
         } else if (roomResponse.data.quiz_id) {
-          const quizResponse = await axios.get(`http://localhost:5000/api/quiz/${roomResponse.data.quiz_id}`)
+          const quizResponse = await axios.get(`/api/quiz/${roomResponse.data.quiz_id}`)
           if (quizResponse.data.image_url) {
             setQuizImage(quizResponse.data.image_url)
           }
@@ -207,7 +208,7 @@ export default function QuizRoom() {
       socket.emit('host:leave', { roomId })
       socket.close()
     }
-    navigate('/')
+    router.push('/')
   }
 
   return (

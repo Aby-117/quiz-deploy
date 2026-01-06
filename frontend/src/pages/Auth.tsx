@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -15,7 +17,7 @@ export default function Auth() {
   const [name, setName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { login, register } = useAuth()
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +38,7 @@ export default function Auth() {
           description: 'Account created successfully!',
         })
       }
-      navigate('/')
+      router.push('/')
     } catch (error: any) {
       toast({
         title: 'Error',

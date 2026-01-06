@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -14,7 +16,7 @@ export default function Home() {
   const [playerName, setPlayerName] = useState('')
   const [quizzes, setQuizzes] = useState<any[]>([])
   const [copiedRoomCode, setCopiedRoomCode] = useState<string | null>(null)
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
   const { user } = useAuth()
 
@@ -24,7 +26,7 @@ export default function Home() {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/quiz')
+      const response = await axios.get('/api/quiz')
       setQuizzes(response.data)
     } catch (error) {
       console.error('Failed to fetch quizzes:', error)
@@ -38,10 +40,10 @@ export default function Home() {
         description: 'Please sign in to create a quiz',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
       return
     }
-    navigate('/create')
+    router.push('/create')
   }
 
   const handleJoinRoom = () => {
@@ -53,7 +55,8 @@ export default function Home() {
       })
       return
     }
-    navigate(`/play/${roomCode}`, { state: { playerName } })
+    localStorage.setItem('playerName', playerName)
+    router.push(`/play/${roomCode}`)
   }
 
   const handleStartQuiz = async (quizId: number, activeRoomCode?: string | null) => {
@@ -63,22 +66,22 @@ export default function Home() {
         description: 'Please sign in to create a quiz room',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
       return
     }
     
     // If there's an active room, navigate to it directly
     if (activeRoomCode) {
-      navigate(`/room/${activeRoomCode}`)
+      router.push(`/room/${activeRoomCode}`)
       return
     }
     
     // Otherwise, create a new room
     try {
-      const response = await axios.post('http://localhost:5000/api/room', {
+      const response = await axios.post('/api/room', {
         quizId,
       })
-      navigate(`/room/${response.data.id}`)
+      router.push(`/room/${response.data.id}`)
     } catch (error: any) {
       if (error.response?.status === 401) {
         toast({
@@ -86,7 +89,7 @@ export default function Home() {
           description: 'Please sign in to create a quiz room',
           variant: 'destructive',
         })
-        navigate('/auth')
+        router.push('/auth')
       } else {
         toast({
           title: 'Error',
@@ -104,7 +107,7 @@ export default function Home() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/quiz/${quizId}`)
+      await axios.delete(`/api/quiz/${quizId}`)
       toast({
         title: 'Success',
         description: 'Quiz deleted successfully',
@@ -254,7 +257,7 @@ export default function Home() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => navigate(`/edit/${quiz.id}`)}
+                            onClick={() => router.push(`/edit/${quiz.id}`)}
                             className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200 hover:scale-110"
                             title="Edit Quiz"
                           >
@@ -318,7 +321,7 @@ export default function Home() {
                               description: 'Please sign in to join quiz rooms',
                               variant: 'destructive',
                             })
-                            navigate('/auth')
+                            router.push('/auth')
                             return
                           }
                           handleStartQuiz(quiz.id, quiz.activeRoomCode)

@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -46,7 +48,7 @@ export default function CreateQuiz() {
       imagePreview: null,
     },
   ])
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
   const { user, isLoading: authLoading } = useAuth()
 
@@ -57,7 +59,7 @@ export default function CreateQuiz() {
         description: 'Please sign in to create a quiz',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
     }
   }, [user, authLoading, navigate, toast])
 
@@ -217,7 +219,7 @@ export default function CreateQuiz() {
         })
       )
 
-      await axios.post('http://localhost:5000/api/quiz', {
+      await axios.post('/api/quiz', {
         title,
         description,
         image: quizImageBase64,
@@ -228,7 +230,7 @@ export default function CreateQuiz() {
         title: 'Success',
         description: 'Quiz created successfully!',
       })
-      navigate('/')
+      router.push('/')
     } catch (error: any) {
       console.error('Error creating quiz:', error)
       if (error.response?.status === 401) {
@@ -237,7 +239,7 @@ export default function CreateQuiz() {
           description: 'Please sign in to create a quiz',
           variant: 'destructive',
         })
-        navigate('/auth')
+        router.push('/auth')
       } else {
         const errorMessage = error.response?.data?.error || error.message || 'Failed to create quiz'
         toast({
@@ -375,7 +377,7 @@ export default function CreateQuiz() {
         <div className="mb-6 animate-fade-in">
           <Button 
             variant="outline" 
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="bg-white/90 hover:bg-white hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             ← Back to Home

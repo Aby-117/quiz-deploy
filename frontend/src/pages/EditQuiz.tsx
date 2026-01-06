@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -24,8 +26,7 @@ interface Question {
   existingImageUrl?: string | null
 }
 
-export default function EditQuiz() {
-  const { id } = useParams<{ id: string }>()
+export default function EditQuiz({ id }: { id: string }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState<File | null>(null)
@@ -36,7 +37,7 @@ export default function EditQuiz() {
   const [isLoading, setIsLoading] = useState(true)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [questions, setQuestions] = useState<Question[]>([])
-  const navigate = useNavigate()
+  const router = useRouter()
   const { toast } = useToast()
   const { user, isLoading: authLoading } = useAuth()
 
@@ -47,7 +48,7 @@ export default function EditQuiz() {
         description: 'Please sign in to edit quizzes',
         variant: 'destructive',
       })
-      navigate('/auth')
+      router.push('/auth')
       return
     }
     if (id && user) {
@@ -57,7 +58,7 @@ export default function EditQuiz() {
 
   const fetchQuiz = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/quiz/${id}`)
+      const response = await axios.get(`/api/quiz/${id}`)
       const quiz = response.data
       
       // Check ownership
@@ -67,7 +68,7 @@ export default function EditQuiz() {
           description: 'You can only edit quizzes you created',
           variant: 'destructive',
         })
-        navigate('/')
+        router.push('/')
         return
       }
 
@@ -373,7 +374,7 @@ export default function EditQuiz() {
       )
 
       const token = localStorage.getItem('token')
-      await axios.put(`http://localhost:5000/api/quiz/${id}`, {
+      await axios.put(`/api/quiz/${id}`, {
         title,
         description,
         image: quizImageBase64,
@@ -388,7 +389,7 @@ export default function EditQuiz() {
         title: 'Success',
         description: 'Quiz updated successfully!',
       })
-      navigate('/my-quizzes')
+      router.push('/my-quizzes')
     } catch (error: any) {
       console.error('Error updating quiz:', error)
       if (error.response?.status === 401) {
@@ -397,14 +398,14 @@ export default function EditQuiz() {
           description: 'Please sign in to edit quizzes',
           variant: 'destructive',
         })
-        navigate('/auth')
+        router.push('/auth')
       } else if (error.response?.status === 403) {
         toast({
           title: 'Access Denied',
           description: 'You can only edit quizzes you created',
           variant: 'destructive',
         })
-        navigate('/')
+        router.push('/')
       } else {
         toast({
           title: 'Error',
