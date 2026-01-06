@@ -223,7 +223,7 @@ Backend:
 ```bash
 cd backend
 npm run build
-npm start
+npm startiidsjoidfjsoidsfja
 ```
 
 ## Author & Credits
